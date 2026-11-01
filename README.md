@@ -69,3 +69,9 @@ It can be used by:
 These applications communicate with the API, which provides a centralized interface for accessing resources and performing the requested operations.
 
 By centralizing business logic, data validation, authorization, and database interactions, the API ensures consistent behavior across all client applications. This architecture also makes it possible to develop or modify individual applications without having to duplicate the core business logic
+
+```plantuml
+@startuml
+::include{file=documentation/diagrams/taskManagementContext.puml}
+@enduml
+```

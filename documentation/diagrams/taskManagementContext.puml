@@ -1,0 +1,40 @@
+@startuml TaskManagementContext
+
+title Task Management API - Context Diagram
+
+left to right direction
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+skinparam defaultTextAlignment center
+
+actor Visitor
+actor User
+actor "Support Staff" as SupportStaff
+actor Administrator as Admin
+
+rectangle "Client Applications" #E8F4FC {
+    rectangle "Public Website" as PublicWebsite
+    rectangle "User Website" as UserWebsite
+    rectangle "Task Management Application" as TaskApp
+    rectangle "Support Application" as SupportApp
+    rectangle "Admin Application" as AdminApp
+}
+
+rectangle "Task Management API" as API #FFC0CB {
+    usecase "Manage and Access\nResources" as Resources
+}
+
+Visitor --> PublicWebsite
+User --> UserWebsite
+User --> TaskApp
+SupportStaff --> SupportApp
+Admin --> AdminApp
+
+PublicWebsite <--> API : Browse public content
+UserWebsite <--> API : Accounts and projects
+TaskApp <--> API : Tasks, assignments,\nlabels and notifications
+SupportApp <--> API : Support requests\nand bug reports
+AdminApp <--> API : Users, permissions\nand system management
+
+@enduml
