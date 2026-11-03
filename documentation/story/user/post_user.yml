@@ -1,0 +1,39 @@
+version : "0.1"
+
+user_stories:
+
+  title: Create a user
+  label: [users, post, user_story]
+  end_user:
+    actor: "Visitor"
+    story: >
+      As a visitor, I need to create an account
+      so that I can use the Task Management application.
+  system_user:
+    actors: [Public Website]
+    story: >
+      As the Public Website, I need to validate and save new user information
+      so that a user account can be created.
+      
+  acceptance_criteria:
+
+    id: SC001
+    scenario: Create a user with valid information
+    given:
+      - The submitted user information is valid.
+    when:
+      - The application sends a request to create a user.
+    then:
+      - The API validates the submitted information.
+      - The API saves the new user in the database.
+      - The API returns the created user.
+
+    id: SC002
+    scenario: Create a user with invalid information
+    given:
+      - One or more required fields are invalid or missing.
+    when:
+      - The application sends a request to create a user.
+    then:
+      - The API rejects the request.
+      - The API indicates that the submitted information is invalid.

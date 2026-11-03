@@ -1,0 +1,89 @@
+version : "0.1"
+
+user_stories:
+
+  title: Retrieve the details of a user
+  label: [users, get, user_story]
+  end_user:
+    actors: ["Registered user", "Administrator"]
+    stories: 
+      - >
+        As a registered user, I need to view my user details
+        so that I can review my account information.
+      - >
+        As an administrator, I need to retrieve the details of a specific user 
+        so that I can review and manage that user's account.
+  system_user:
+    actors: [User Website, Admin Application]
+    stories: 
+      - >
+        As the User Website, I need to retrieve the details of a user
+        from my Task Management API
+        so that the website can display the requested account information.
+      - >
+        As the Admin Application, I need to retrieve the details of the requested user 
+        from the Task Management API 
+        so that the application can display the user's account information.
+
+  acceptance_criteria:
+
+    - id: UC001
+      scenario: A registered user retrieves their own details
+      given:
+        - The requested user exists.
+        - The requester is authenticated with a valid token.
+        - The requester is a registered user.
+        - The requested user ID matches the requester's user ID.
+      when:
+        - The requester requests their user details.
+      then:
+        - The API retrieves the user from the database.
+        - The API returns the user's details.
+
+    - id: UC002
+      scenario: An administrator retrieves another user's details
+      given:
+        - The requested user exists.
+        - The administrator is authenticated with a valid token.
+        - The requester has administrator privileges.
+      when:
+        - The administrator requests the details of a specific user.
+      then:
+        - The API retrieves the requested user from the database.
+        - The API returns the user's details.
+
+    - id: UC003
+      scenario: A registered user attempts to retrieve another user's details
+      given:
+        - The requested user exists.
+        - The requester is authenticated with a valid token.
+        - The requester is a registered user without administrator privileges.
+        - The requested user ID does not match the requester's user ID.
+      when:
+        - The requester attempts to retrieve the other user's details.
+      then:
+        - The API denies access to the requested information.
+        - The API returns HTTP status 403.
+
+    - id: UC004
+      scenario: Retrieve a non-existent user
+      given:
+        - The requester is authenticated with a valid token.
+        - The requester is authorized to access the requested user.
+        - The requested user ID does not exist in the database.
+      when:
+        - The requester requests the user's details.
+      then:
+        - The API indicates that the requested user was not found.
+        - The API returns HTTP status 404.
+
+    - id: UC005
+      scenario: Retrieve user details without a valid token
+      given:
+        - The requested user exists.
+        - The requester does not have a valid authentication token.
+      when:
+        - The requester attempts to retrieve the user's details.
+      then:
+        - The API denies access to the client.
+        - The API returns HTTP status 401.

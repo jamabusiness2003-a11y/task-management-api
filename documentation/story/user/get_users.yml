@@ -1,0 +1,39 @@
+version: "0.1"
+
+user_stories:
+
+  title: Retrieve users
+  label: [users, get, user_story]
+  end_user:
+    actor: "Administrator"
+    story: >
+      As an administrator, I need to retrieve the list of users
+      so that I can manage user accounts.
+  system_user:
+    actor: [Admin Application]
+    story: >
+      As the Admin Application, I need to retrieve users from the database
+      so that the application can display the user list.
+  
+  acceptance_criteria:
+  
+    id: SC001
+    scenario: Retrieve existing users
+    given:
+      - The users requested by the administrator exist.
+      - The application has a valid token
+    when:
+      - The application searches for users in the database.
+    then: 
+      - The API retrieves the users from the database.
+      - The API return the list of users.
+
+    id: SC002
+    scenario: Retrieve users when no users exist
+    given:
+      - No users exit in the database.
+      - The application has a valid token.
+    when:
+      - The application searches for users in the database.
+    then:
+      - The API returns an empty list.

@@ -1,0 +1,52 @@
+version : "0.1"
+
+user_stories:
+  
+  title: Replace a user's details
+  label: [users, put, user_story]
+  end_user:
+    actor: "Registered user"
+    story: >
+      As a registered user, I need to replace my editable account details
+      so that my account information stays up to date.
+  system_user:
+    actors: [User Application]
+    story: >
+      As the User Application, I need to validate and save the replacement details
+      so that the user's account information is updated.
+      
+  acceptance_criteria:
+
+    id: SC001
+    scenario: Replace a user's details with valid information
+    given:
+      - The user corresponding to the requested ID exists.
+      - The application has a valid token.
+      - The requester is authorized to update this user.
+      - The replacement information is valid.
+    when:
+      - The application submits the replacement details.
+    then:
+      - The API updates the user's editable details in the database.
+      - The API returns the updated user.
+
+    id: SC002
+    scenario: Replace details for a non-existent user
+    given:
+      - The user corresponding to the requested ID does not exist.
+      - The application has a valid token.
+    when:
+      - The application submits the replacement details.
+    then:
+      - The API indicates that the requested user was not found.
+
+    id: SC003
+    scenario: Replace details without a valid token
+    given:
+      - The user exists.
+      - The application does not have a valid token.
+    when:
+      - The application submits the replacement details.
+    then:
+      - The API returns HTTP status 401.
+      - The API denies access to the client.
