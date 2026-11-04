@@ -1,0 +1,151 @@
+
+@startuml TaskManagementAPI
+
+title Task Management API - Entity Relationship Diagram
+
+hide circle
+skinparam linetype ortho
+skinparam entity {
+    BackgroundColor #EAF2F8
+    BorderColor #2874A6
+}
+
+' =========================
+' USERS
+' =========================
+entity "Users" as Users {
+    * id : BIGINT <<PK>>
+    --
+    username : VARCHAR(50)
+    email : VARCHAR(255)
+    password_hash : VARCHAR(255)
+    first_name : VARCHAR(100)
+    last_name : VARCHAR(100)
+    role : ENUM('registered_user','administrator','support_staff')
+    created_at : DATETIME
+    updated_at : DATETIME
+}
+
+' =========================
+' PROJECTS
+' =========================
+entity "Projects" as Projects {
+    * id : BIGINT <<PK>>
+    --
+    name : VARCHAR(150)
+    description : TEXT
+    owner_id : BIGINT <<FK>>
+    created_at : DATETIME
+    updated_at : DATETIME
+}
+
+' =========================
+' CATEGORIES
+' =========================
+entity "Categories" as Categories {
+    * id : BIGINT <<PK>>
+    --
+    name : VARCHAR(100)
+    description : TEXT
+}
+
+' =========================
+' TASKS
+' =========================
+entity "Tasks" as Tasks {
+    * id : BIGINT <<PK>>
+    --
+    title : VARCHAR(200)
+    description : TEXT
+    status : VARCHAR(30)
+    priority : VARCHAR(30)
+    project_id : BIGINT <<FK>>
+    category_id : BIGINT <<FK>>
+    due_date : DATETIME
+    created_at : DATETIME
+    updated_at : DATETIME
+}
+
+' =========================
+' LABELS
+' =========================
+entity "Labels" as Labels {
+    * id : BIGINT <<PK>>
+    --
+    name : VARCHAR(100)
+    color : VARCHAR(20)
+    project_id : BIGINT <<FK>>
+}
+
+' =========================
+' TASK LABELS
+' JUNCTION TABLE
+' =========================
+entity "TaskLabels" as TaskLabels {
+    * task_id : BIGINT <<PK, FK>>
+    * label_id : BIGINT <<PK, FK>>
+}
+
+' =========================
+' TASK ASSIGNMENTS
+' =========================
+entity "TaskAssignments" as TaskAssignments {
+    * id : BIGINT <<PK>>
+    --
+    task_id : BIGINT <<FK>>
+    user_id : BIGINT <<FK>>
+    assigned_at : DATETIME
+}
+
+' =========================
+' COMMENTS
+' =========================
+entity "Comments" as Comments {
+    * id : BIGINT <<PK>>
+    --
+    content : TEXT
+    task_id : BIGINT <<FK>>
+    author_id : BIGINT <<FK>>
+    created_at : DATETIME
+    updated_at : DATETIME
+}
+
+' =========================
+' NOTIFICATIONS
+' =========================
+entity "Notifications" as Notifications {
+    * id : BIGINT <<PK>>
+    --
+    user_id : BIGINT <<FK>>
+    task_id : BIGINT <<FK>> 
+    message : TEXT
+    is_read : BOOLEAN
+    created_at : DATETIME
+}
+
+' =========================
+' RELATIONSHIPS
+' =========================
+
+Users ||--o{ Projects 
+
+Projects ||--o{ Tasks 
+
+Categories ||--o{ Tasks 
+
+Projects ||--o{ Labels 
+
+Tasks ||--o{ TaskLabels 
+Labels ||--o{ TaskLabels 
+
+Users ||--o{ TaskAssignments 
+Tasks ||--o{ TaskAssignments 
+
+Tasks ||--o{ Comments 
+Users ||--o{ Comments 
+
+Users ||--o{ Notifications 
+Tasks |o--o{ Notifications 
+
+@enduml
+
