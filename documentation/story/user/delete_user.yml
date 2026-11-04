@@ -17,35 +17,35 @@ user_stories:
       
   acceptance_criteria:
 
-    id: SC001
-    scenario: Delete an existing user
-    given:
-      - The user corresponding to the requested ID exists.
-      - The application has a valid token.
-      - The requester is authorized to delete this user.
-    when:
-      - The application requests deletion of the user.
-    then:
-      - The API deletes the user from the database.
-      - The API confirms that the deletion succeeded.
+    - id: SC001
+      scenario: Delete an existing user
+      given:
+        - The user corresponding to the requested ID exists.
+        - The application has a valid token.
+        - The requester is authorized to delete this user.
+      when:
+        - The application requests deletion of the user.
+      then:
+        - The API deletes the user from the database.
+        - The API confirms that the deletion succeeded.
 
-    id: SC002
-    scenario: Delete a non-existent user
-    given:
-      - The user corresponding to the requested ID does not exist.
-      - The application has a valid token.
-    when:
-      - The application requests deletion of the user.
-    then:
-      - The API indicates that the requested user was not found.
+    - id: SC002
+      scenario: Delete a non-existent user
+      given:
+        - The user corresponding to the requested ID does not exist.
+        - The application has a valid token.
+      when:
+        - The application requests deletion of the user.
+      then:
+        - The API indicates that the requested user was not found.
 
-    id: SC003
-    scenario: Delete a user without a valid token
-    given:
-      - The user exists.
-      - The application does not have a valid token.
-    when:
-      - The application requests deletion of the user.
-    then:
-      - The API returns HTTP status 401.
-      - The API denies access to the client.
+    - id: SC003
+      scenario: Delete a user without a valid token
+      given:
+        - The user exists.
+        - The application does not have a valid token.
+      when:
+        - The application requests deletion of the user.
+      then:
+        - The API returns HTTP status 401.
+        - The API denies access to the client.

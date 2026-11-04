@@ -17,36 +17,36 @@ user_stories:
 
   acceptance_criteria:
     
-    id: SC001
-    scenario: Partially update a user with valid information
-    given:
-      - The user corresponding to the requested ID exists.
-      - The application has a valid token.
-      - The requester is authorized to update this user.
-      - The submitted fields contain valid information.
-    when:
-      - The application submits a partial update.
-    then:
-      - The API updates only the specified fields in the database.
-      - The API returns the updated user.
+    - id: SC001
+      scenario: Partially update a user with valid information
+      given:
+        - The user corresponding to the requested ID exists.
+        - The application has a valid token.
+        - The requester is authorized to update this user.
+        - The submitted fields contain valid information.
+      when:
+        - The application submits a partial update.
+      then:
+        - The API updates only the specified fields in the database.
+        - The API returns the updated user.
 
-    id: SC002
-    scenario: Partially update a non-existent user
-    given:
-      - The user corresponding to the requested ID does not exist.
-      - The application has a valid token.
-    when:
-      - The application submits a partial update.
-    then:
-      - The API indicates that the requested user was not found.
+    - id: SC002
+      scenario: Partially update a non-existent user
+      given:
+        - The user corresponding to the requested ID does not exist.
+        - The application has a valid token.
+      when:
+        - The application submits a partial update.
+      then:
+        - The API indicates that the requested user was not found.
 
-    id: SC003
-    scenario: Partially update a user without a valid token
-    given:
-      - The user exists.
-      - The application does not have a valid token.
-    when:
-      - The application submits a partial update.
-    then:
-      - The API returns HTTP status 401.
-      - The API denies access to the client.
+    - id: SC003
+      scenario: Partially update a user without a valid token
+      given:
+        - The user exists.
+        - The application does not have a valid token.
+      when:
+        - The application submits a partial update.
+      then:
+        - The API returns HTTP status 401.
+        - The API denies access to the client.

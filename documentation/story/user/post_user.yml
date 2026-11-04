@@ -17,23 +17,23 @@ user_stories:
       
   acceptance_criteria:
 
-    id: SC001
-    scenario: Create a user with valid information
-    given:
-      - The submitted user information is valid.
-    when:
-      - The application sends a request to create a user.
-    then:
-      - The API validates the submitted information.
-      - The API saves the new user in the database.
-      - The API returns the created user.
+    - id: SC001
+      scenario: Create a user with valid information
+      given:
+        - The submitted user information is valid.
+      when:
+        - The application sends a request to create a user.
+      then:
+        - The API validates the submitted information.
+        - The API saves the new user in the database.
+        - The API returns the created user.
 
-    id: SC002
-    scenario: Create a user with invalid information
-    given:
-      - One or more required fields are invalid or missing.
-    when:
-      - The application sends a request to create a user.
-    then:
-      - The API rejects the request.
-      - The API indicates that the submitted information is invalid.
+    - id: SC002
+      scenario: Create a user with invalid information
+      given:
+        - One or more required fields are invalid or missing.
+      when:
+        - The application sends a request to create a user.
+      then:
+        - The API rejects the request.
+        - The API indicates that the submitted information is invalid.
