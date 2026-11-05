@@ -1,0 +1,67 @@
+
+@startuml UserCollectionComponent
+
+title Task Management API - Users Collection Component Diagram
+
+left to right direction
+
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+actor "Registered User" as RegisteredUser
+actor "Administrator" as Administrator
+actor "Support Staff" as SupportStaff
+
+package "Client Applications" #cb32bf {
+    component "User Website" as UserWebsite
+    component "Admin Application" as AdminApplication
+    component "Support Application" as SupportApplication
+}
+
+package "Task Management API" #e3f345 {
+
+    package "Presentation Layer" #ffffff {
+        component "Users Router" as UsersRouter
+        component "User Schemas / DTOs" as UserSchemas
+    }
+
+    package "Business Layer" #ffffff {
+        component "User Service" as UserService
+        component "Authentication & Authorization" as Auth
+    }
+
+    package "Data Access Layer" #ffffff {
+        component "User Repository" as UserRepository
+        component "User Model" as UserModel
+    }
+}
+
+database "MySQL Database" as MySQL #b3542f {
+    component "Users Table" as UsersTable
+}
+
+' Actor relationships
+RegisteredUser --> UserWebsite
+Administrator --> AdminApplication
+SupportStaff --> SupportApplication
+
+' Client to API
+UserWebsite --> UsersRouter : HTTP Requests
+AdminApplication --> UsersRouter : HTTP Requests
+SupportApplication --> UsersRouter : HTTP Requests
+
+' Presentation Layer
+UsersRouter --> UserSchemas : Validate request / response
+UsersRouter --> Auth : Verify access
+UsersRouter --> UserService : Call user operations
+
+' Business Layer
+UserService --> Auth : Check permissions
+UserService --> UserRepository : Request data
+
+' Data Access Layer
+UserRepository --> UserModel : ORM operations
+UserModel --> UsersTable : SQL queries
+
+@enduml
