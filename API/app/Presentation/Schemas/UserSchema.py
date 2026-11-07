@@ -1,12 +1,6 @@
-from pydantic import BaseModel, Field
-from enum import Enum
-from datetime import datetime, timezone
-
-class Role(Enum):
-    REGISTERED_USER = "registered_user"
-    ADMINISTRATER = "administrater"
-    SUPPORT_STAFF = "support_staff"
-
+from pydantic import BaseModel
+from datetime import datetime
+from app.DataAccess.Models.User import Role
 
 class UserResponse(BaseModel):
     id : int
@@ -15,5 +9,5 @@ class UserResponse(BaseModel):
     firstName : str
     lastName : str
     role : Role
-    createdAt : datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    createdAt : datetime
     updatedAt: datetime | None = None
